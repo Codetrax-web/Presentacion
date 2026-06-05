@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Damian Cruz - CodeTrax Glass Neon</title>
+    <link rel="icon" type="image/png" href="Ima/logo.png">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            /* Imagen de fondo */
+            background: url('Ima/fondo.jpg') no-repeat center center fixed;
+            background-size: cover;
+            font-family: 'Poppins', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        .card-container {
+            width: 90%;
+            max-width: 380px;
+            perspective: 1000px;
+            padding: 50px 0;
+        }
+
+        .card {
+            background: rgba(20, 20, 30, 0.4);
+            backdrop-filter: blur(20px) saturate(180%);
+            border-radius: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+            padding: 30px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
+
+        .profile-pic {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            border: 4px solid #793eeb;
+            box-shadow: 0 0 15px rgba(121, 62, 235, 0.7);
+            object-fit: cover;
+            margin-top: -80px;
+            margin-bottom: 20px;
+            transition: all 0.3s ease;
+        }
+
+        h1 { font-size: 1.8rem; margin: 0; color: white; }
+        .title { font-weight: 600; font-size: 1rem; margin-bottom: 30px; color: #b085f5; text-transform: uppercase; }
+
+        .socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+        .socials a {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(8px);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 18px;
+            border-radius: 15px;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .socials a:hover {
+            color: white;
+            background: rgba(121, 62, 235, 0.3);
+            box-shadow: 0 5px 25px rgba(121, 62, 235, 0.8);
+            border: 1px solid rgba(121, 62, 235, 0.5);
+        }
+
+        .details-btn {
+            background: rgba(50, 50, 60, 0.5);
+            backdrop-filter: blur(10px);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 15px 25px;
+            border-radius: 15px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .contact-info {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 15px;
+            margin-top: 10px;
+        }
+
+        .contact-info.visible { max-height: 200px; padding: 15px; margin-top: 15px; }
+        .contact-item { margin: 12px 0; color: #ccc; display: flex; align-items: center; }
+        .contact-item i { color: #793eeb; margin-right: 12px; }
+    </style>
+</head>
+<body>
+    <div class="card-container">
+        <div class="card">
+            <img src="Ima/tu.png" alt="Damian Cruz" class="profile-pic">
+            <h1>DAMIAN CRUZ</h1>
+            <p class="title">FUNDADOR | CODETRAX</p>
+            <div class="socials">
+                <a href="https://www.instagram.com/damia_ncv"><i class="fab fa-instagram"></i></a>
+                <a href="https://wa.me/5578526705"><i class="fab fa-whatsapp"></i></a>
+                <a href="https://codetrax.wixstudio.com/codetrax"><i class="fas fa-globe"></i></a>
+                <a href="https://discord.com/invite/rsAwuCg6xK"><i class="fab fa-discord"></i></a>
+                <a href="https://github.com/ALCACHOFA24"><i class="fab fa-github"></i></a>
+                <a href="https://www.youtube.com/@DAMIANCDX"><i class="fab fa-youtube"></i></a>
+            </div>
+            <button class="details-btn" id="toggle-details">
+                Datos de Contacto <i class="fas fa-chevron-down" id="arrow"></i>
+            </button>
+            <div class="contact-info" id="contact-panel">
+                <div class="contact-item"><i class="fas fa-phone"></i> +52 5578526705</div>
+                <div class="contact-item"><i class="fas fa-envelope"></i> damiancdx@gmail.com</div>
+            </div>
+        </div>
+    </div>
+    <script>
+        const toggleBtn = document.getElementById('toggle-details');
+        const contactPanel = document.getElementById('contact-panel');
+        const arrowIcon = document.getElementById('arrow');
+        toggleBtn.addEventListener('click', () => {
+            contactPanel.classList.toggle('visible');
+            arrowIcon.style.transform = contactPanel.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0deg)';
+        });
+    </script>
+</body>
+</html>
