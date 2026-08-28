@@ -5,6 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damian Cruz - CodeTrax</title>
     <link rel="icon" type="image/png" href="Ima/logo.png">
+    
+    <!-- Importación de la fuente Poppins (Faltaba esto para que funcionara tu CSS) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
@@ -21,16 +27,16 @@
         font-family: 'Poppins', sans-serif;
         color: white;
         overflow-x: hidden;
-         }
+    }
 
-.card-container {
+    .card-container {
         width: 90%;
         max-width: 380px;
         perspective: 1000px;
         padding: 50px 0;
-         }
+    }
 
-.card {
+    .card {
         background: rgba(20, 20, 30, 0.4);
         backdrop-filter: blur(20px) saturate(180%);
         border-radius: 25px;
@@ -39,9 +45,9 @@
         padding: 30px;
         text-align: center;
         transition: all 0.5s ease;
-         }
+    }
 
-.profile-pic {
+    .profile-pic {
         width: 120px;
         height: 120px;
         border-radius: 50%;
@@ -51,14 +57,14 @@
         margin-top: -80px;
         margin-bottom: 20px;
         transition: all 0.3s ease;
-         }
+    }
 
-h1 { font-size: 1.8rem; margin: 0; color: white; }
-.title { font-weight: 600; font-size: 1rem; margin-bottom: 30px; color: #b085f5; text-transform: uppercase; }
+    h1 { font-size: 1.8rem; margin: 0; color: white; font-weight: 600; }
+    .title { font-weight: 400; font-size: 1rem; margin-bottom: 30px; color: #b085f5; text-transform: uppercase; }
 
-.socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+    .socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
 
-.socials a {
+    .socials a {
         background: rgba(255, 255, 255, 0.05);
         backdrop-filter: blur(8px);
         color: rgba(255, 255, 255, 0.8);
@@ -68,16 +74,17 @@ h1 { font-size: 1.8rem; margin: 0; color: white; }
         font-size: 1.5rem;
         transition: all 0.3s ease;
         border: 1px solid rgba(255, 255, 255, 0.08);
-         }
+    }
 
-.socials a:hover {
+    .socials a:hover {
         color: white;
         background: rgba(121, 62, 235, 0.3);
         box-shadow: 0 5px 25px rgba(121, 62, 235, 0.8);
         border: 1px solid rgba(121, 62, 235, 0.5);
-         }
+        transform: translateY(-3px); /* Pequeña animación extra al pasar el mouse */
+    }
 
-.details-btn {
+    .details-btn {
         background: rgba(50, 50, 60, 0.5);
         backdrop-filter: blur(10px);
         color: white;
@@ -89,52 +96,85 @@ h1 { font-size: 1.8rem; margin: 0; color: white; }
         display: flex;
         justify-content: space-between;
         align-items: center;
-         }
+        font-family: 'Poppins', sans-serif;
+        font-size: 1rem;
+        transition: background 0.3s ease;
+    }
+    
+    .details-btn:hover {
+        background: rgba(121, 62, 235, 0.4);
+    }
 
-.contact-info {
+    .contact-info {
         max-height: 0;
         overflow: hidden;
-        transition: max-height 0.5s ease-out;
+        transition: max-height 0.5s ease-out, padding 0.5s ease;
         background: rgba(255, 255, 255, 0.02);
         border-radius: 15px;
         margin-top: 10px;
-         }
+    }
 
-.contact-info.visible { max-height: 200px; padding: 15px; margin-top: 15px; }
-.contact-item { margin: 12px 0; color: #ccc; display: flex; align-items: center; }
-.contact-item i { color: #793eeb; margin-right: 12px; }
+    .contact-info.visible { max-height: 200px; padding: 15px; margin-top: 15px; }
+    
+    .contact-item { margin: 12px 0; display: flex; align-items: center; }
+    .contact-item i { color: #793eeb; margin-right: 12px; }
+    
+    /* Estilos para que los enlaces de contacto se vean limpios */
+    .contact-item a {
+        color: #ccc;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+    
+    .contact-item a:hover {
+        color: white;
+    }
+    
+    #arrow {
+        transition: transform 0.3s ease;
+    }
 
 </style>
-    </head>
-        <body>
+</head>
+<body>
     <div class="card-container">
         <div class="card">
-            <img src="Ima/tu.png" alt="Damian Cruz" class="profile-pic">
+            <img src="Ima/tu.png" alt="Damian Cruz - CODETRAX" class="profile-pic">
             <h1>DAMIAN CRUZ</h1>
             <p class="title">FUNDADOR | CODETRAX</p>
+            
             <div class="socials">
-                <a href="https://www.instagram.com/damia_ncv"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@damian_cdx?is_from_webapp=1&sender_device=pc"><i class="fab fa-tiktok"></i></a>
-                <a href="https://codetrax.s.gy/"><i class="fas fa-globe"></i></a>
-                <a href="https://discord.gg/uUSeyPxzgX"><i class="fab fa-discord"></i></a>
-                <a href="https://github.com/Codetrax-web"><i class="fab fa-github"></i></a>
-                <a href="https://www.youtube.com/@DAMIANCDX"><i class="fab fa-youtube"></i></a>
+                <a href="https://www.instagram.com/damia_ncv" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.tiktok.com/@damian_cdx" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a href="https://codetrax.s.gy/" target="_blank" rel="noopener noreferrer" aria-label="Sitio Web CODETRAX"><i class="fas fa-globe"></i></a>
+                <a href="https://discord.gg/uUSeyPxzgX" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                <a href="https://github.com/Codetrax-web" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://www.youtube.com/@DAMIANCDX" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
             </div>
+            
             <button class="details-btn" id="toggle-details">
                 Datos de Contacto <i class="fas fa-chevron-down" id="arrow"></i>
             </button>
+            
             <div class="contact-info" id="contact-panel">
-                <div class="contact-item"><i class="fas fa-phone"></i> +52 5578526705</div>
-                <div class="contact-item"><i class="fas fa-envelope"></i> damiancdx@gmail.com</div>
+                <!-- Enlaces interactivos (tel y mailto) -->
+                <div class="contact-item">
+                    <i class="fas fa-phone"></i> 
+                    <a href="tel:+525578526705">+52 5578526705</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i> 
+                    <a href="mailto:damiancdx@gmail.com">damiancdx@gmail.com</a>
+                </div>
             </div>
         </div>
-
-
     </div>
+
     <script>
         const toggleBtn = document.getElementById('toggle-details');
         const contactPanel = document.getElementById('contact-panel');
         const arrowIcon = document.getElementById('arrow');
+        
         toggleBtn.addEventListener('click', () => {
             contactPanel.classList.toggle('visible');
             arrowIcon.style.transform = contactPanel.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0deg)';
