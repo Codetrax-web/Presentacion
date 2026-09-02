@@ -6,7 +6,7 @@
     <title>Damian Cruz - CodeTrax</title>
     <link rel="icon" type="image/webp" href="Ima/logo.webp">
     
-    <!-- Importación de la fuente Poppins (Faltaba esto para que funcionara tu CSS) -->
+    <!-- Importación de la fuente Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
@@ -14,6 +14,28 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 <style>
+    /* =========================================================
+       ESTILO: NEGRO OBSIDIANA GLASS (GLASSMORPHISM PURO)
+       ========================================================= */
+    :root {
+        /* Paleta Obsidiana Glass */
+        --obsidiana-gradiente: linear-gradient(135deg, rgba(25, 25, 32, 0.85) 0%, rgba(8, 8, 12, 0.92) 100%);
+        --obsidiana-panel: rgba(12, 12, 16, 0.7);
+        
+        --blanco-plata: #e2e8f0;
+        --blanco-puro: #ffffff;
+        --border-glass-bright: rgba(255, 255, 255, 0.18);
+        --border-glass-subtle: rgba(255, 255, 255, 0.08);
+
+        /* Acentos */
+        --azul-rey: #1d4ed8;
+        --azul-rey-glow: rgba(29, 78, 216, 0.8);
+
+        --rojo-carmin: #c8102e;
+        --rojo-carmin-hover-bg: rgba(200, 16, 46, 0.3);
+        --rojo-carmin-glow: rgba(200, 16, 46, 0.75);
+    }
+
     body {
         margin: 0;
         display: flex;
@@ -21,11 +43,10 @@
         align-items: center;
         min-height: 100vh;
         
-        /* Imagen de fondo */
         background: url('Ima/fondo.webp') no-repeat center center fixed;
         background-size: cover;
         font-family: 'Poppins', sans-serif;
-        color: white;
+        color: var(--blanco-puro);
         overflow-x: hidden;
     }
 
@@ -36,59 +57,91 @@
         padding: 50px 0;
     }
 
+    /* Tarjeta Principal en Negro Obsidiana Glass */
     .card {
-        background: rgba(20, 20, 30, 0.4);
-        backdrop-filter: blur(20px) saturate(180%);
+        background: var(--obsidiana-gradiente);
+        backdrop-filter: blur(25px) saturate(200%);
+        -webkit-backdrop-filter: blur(25px) saturate(200%);
         border-radius: 25px;
-        border: 1px solid rgba(255, 255, 255, 0.12);
-        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+        border: 1px solid var(--border-glass-bright);
+        box-shadow: 
+            0 20px 50px rgba(0, 0, 0, 0.9),
+            inset 0 1px 1px rgba(255, 255, 255, 0.2); /* Reflejo superior estilo cristal */
         padding: 30px;
         text-align: center;
         transition: all 0.5s ease;
     }
 
+    /* Foto de perfil con aro Azul Rey */
     .profile-pic {
         width: 120px;
         height: 120px;
         border-radius: 50%;
-        border: 4px solid #793eeb;
-        box-shadow: 0 0 15px rgba(121, 62, 235, 0.7);
+        border: 4px solid var(--azul-rey);
+        box-shadow: 0 0 25px var(--azul-rey-glow);
         object-fit: cover;
         margin-top: -80px;
         margin-bottom: 20px;
         transition: all 0.3s ease;
     }
 
-    h1 { font-size: 1.8rem; margin: 0; color: white; font-weight: 600; }
-    .title { font-weight: 400; font-size: 1rem; margin-bottom: 30px; color: #b085f5; text-transform: uppercase; }
+    h1 { 
+        font-size: 1.8rem; 
+        margin: 0; 
+        color: var(--blanco-puro); 
+        font-weight: 600; 
+        letter-spacing: 0.5px;
+        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+    }
 
-    .socials { display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin-bottom: 30px; }
+    .title { 
+        font-weight: 600; 
+        font-size: 0.95rem; 
+        margin-bottom: 30px; 
+        color: var(--azul-rey); 
+        text-transform: uppercase; 
+        letter-spacing: 2px;
+    }
 
+    .socials { 
+        display: grid; 
+        grid-template-columns: repeat(3, 1fr); 
+        gap: 15px; 
+        margin-bottom: 30px; 
+    }
+
+    /* Botones de Redes Sociales en Cristal Oscuro */
     .socials a {
-        background: rgba(255, 255, 255, 0.05);
-        backdrop-filter: blur(8px);
-        color: rgba(255, 255, 255, 0.8);
+        background: rgba(255, 255, 255, 0.03);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        color: var(--blanco-plata);
         padding: 18px;
         border-radius: 15px;
         text-decoration: none;
         font-size: 1.5rem;
         transition: all 0.3s ease;
-        border: 1px solid rgba(255, 255, 255, 0.08);
+        border: 1px solid var(--border-glass-subtle);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
     }
 
+    /* Hover Rojo Carmín con Neón */
     .socials a:hover {
-        color: white;
-        background: rgba(121, 62, 235, 0.3);
-        box-shadow: 0 5px 25px rgba(121, 62, 235, 0.8);
-        border: 1px solid rgba(121, 62, 235, 0.5);
-        transform: translateY(-3px); /* Pequeña animación extra al pasar el mouse */
+        color: var(--blanco-puro);
+        background: var(--rojo-carmin-hover-bg);
+        box-shadow: 0 8px 25px var(--rojo-carmin-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        border: 1px solid var(--rojo-carmin);
+        transform: translateY(-3px);
     }
 
+    /* Botón Desplegable de Contacto */
     .details-btn {
-        background: rgba(50, 50, 60, 0.5);
-        backdrop-filter: blur(10px);
-        color: white;
-        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.04);
+        backdrop-filter: blur(12px);
+        -webkit-backdrop-filter: blur(12px);
+        color: var(--blanco-puro);
+        border: 1px solid var(--border-glass-subtle);
+        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
         padding: 15px 25px;
         border-radius: 15px;
         cursor: pointer;
@@ -98,36 +151,53 @@
         align-items: center;
         font-family: 'Poppins', sans-serif;
         font-size: 1rem;
-        transition: background 0.3s ease;
+        transition: all 0.3s ease;
     }
     
     .details-btn:hover {
-        background: rgba(121, 62, 235, 0.4);
+        background: var(--rojo-carmin-hover-bg);
+        border-color: var(--rojo-carmin);
+        box-shadow: 0 5px 20px var(--rojo-carmin-glow);
     }
 
+    /* Contenedor Desplegable en Obsidiana Oscura */
     .contact-info {
         max-height: 0;
         overflow: hidden;
         transition: max-height 0.5s ease-out, padding 0.5s ease;
-        background: rgba(255, 255, 255, 0.02);
+        background: var(--obsidiana-panel);
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid var(--border-glass-subtle);
         border-radius: 15px;
         margin-top: 10px;
     }
 
-    .contact-info.visible { max-height: 200px; padding: 15px; margin-top: 15px; }
+    .contact-info.visible { 
+        max-height: 200px; 
+        padding: 15px; 
+        margin-top: 15px; 
+    }
     
-    .contact-item { margin: 12px 0; display: flex; align-items: center; }
-    .contact-item i { color: #793eeb; margin-right: 12px; }
+    .contact-item { 
+        margin: 12px 0; 
+        display: flex; 
+        align-items: center; 
+    }
+
+    .contact-item i { 
+        color: var(--azul-rey); 
+        margin-right: 12px; 
+    }
     
-    /* Estilos para que los enlaces de contacto se vean limpios */
     .contact-item a {
-        color: #ccc;
+        color: var(--blanco-plata);
         text-decoration: none;
         transition: color 0.3s ease;
     }
     
     .contact-item a:hover {
-        color: white;
+        color: var(--blanco-puro);
     }
     
     #arrow {
@@ -157,7 +227,6 @@
             </button>
             
             <div class="contact-info" id="contact-panel">
-                <!-- Enlaces interactivos (tel y mailto) -->
                 <div class="contact-item">
                     <i class="fas fa-phone"></i> 
                     <a href="tel:+525578526705">+52 5578526705</a>
