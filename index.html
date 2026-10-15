@@ -4,37 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Damian Cruz - CodeTrax</title>
+    <meta name="description" content="Damian Cruz, fundador de CodeTrax. Mis redes, sitio web y formas de contacto en un solo lugar.">
+    <meta name="theme-color" content="#08080c">
+
+    <!-- Vista previa al compartir -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Damian Cruz - Fundador de CodeTrax">
+    <meta property="og:description" content="Mis redes, sitio web y contacto en un solo lugar.">
+    <meta property="og:url" content="https://damian.s.gy">
+    <meta property="og:image" content="https://codetrax-web.github.io/Presentacion/Ima/tu.webp">
+    <meta name="twitter:card" content="summary">
+
     <link rel="icon" type="image/webp" href="Ima/logo.webp">
-    
-    <!-- Importación de la fuente Poppins -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-    /* =========================================================
-       ESTILO: NEGRO OBSIDIANA GLASS (GLASSMORPHISM PURO)
-       ========================================================= */
     :root {
-        /* Paleta Obsidiana Glass */
         --obsidiana-gradiente: linear-gradient(135deg, rgba(25, 25, 32, 0.85) 0%, rgba(8, 8, 12, 0.92) 100%);
         --obsidiana-panel: rgba(12, 12, 16, 0.7);
-        
+        --obsidiana-solido: #0c0c10;
+
         --blanco-plata: #e2e8f0;
         --blanco-puro: #ffffff;
         --border-glass-bright: rgba(255, 255, 255, 0.18);
         --border-glass-subtle: rgba(255, 255, 255, 0.08);
 
-        /* Acentos */
         --azul-rey: #1d4ed8;
         --azul-rey-glow: rgba(29, 78, 216, 0.8);
+        --azul-claro: #60a5fa; /* texto e íconos: contraste legible sobre negro */
 
         --rojo-carmin: #c8102e;
         --rojo-carmin-hover-bg: rgba(200, 16, 46, 0.3);
         --rojo-carmin-glow: rgba(200, 16, 46, 0.75);
     }
+
+    * { box-sizing: border-box; }
 
     body {
         margin: 0;
@@ -42,212 +49,475 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
-        
-        background: url('Ima/fondo.webp') no-repeat center center fixed;
-        background-size: cover;
+        background: var(--obsidiana-solido);
         font-family: 'Poppins', sans-serif;
         color: var(--blanco-puro);
         overflow-x: hidden;
     }
+
+    /* Fondo fijo compatible con iOS (en lugar de background-attachment: fixed) */
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        z-index: -1;
+        background: url('Ima/fondo.webp') no-repeat center center / cover;
+    }
+
+    /* ---------- Entrada: una sola secuencia al cargar ---------- */
+    @keyframes rise {
+        from { opacity: 0; transform: translateY(18px); }
+        to   { opacity: 1; transform: none; }
+    }
+    @keyframes cardIn {
+        from { opacity: 0; transform: translateY(40px) scale(0.94); filter: blur(8px); }
+        to   { opacity: 1; transform: none; filter: blur(0); }
+    }
+    @keyframes pop {
+        0%   { opacity: 0; transform: scale(0.5); }
+        70%  { opacity: 1; transform: scale(1.08); }
+        100% { transform: scale(1); }
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
 
     .card-container {
         width: 90%;
         max-width: 380px;
         perspective: 1000px;
         padding: 50px 0;
+        animation: cardIn 0.9s cubic-bezier(.2, .8, .2, 1) both;
     }
 
-    /* Tarjeta Principal en Negro Obsidiana Glass */
+    .stagger { animation: rise 0.6s cubic-bezier(.2, .8, .2, 1) both; animation-delay: var(--d, 0s); }
+
+    /* ---------- Tarjeta ---------- */
     .card {
+        position: relative;
         background: var(--obsidiana-gradiente);
         backdrop-filter: blur(25px) saturate(200%);
         -webkit-backdrop-filter: blur(25px) saturate(200%);
         border-radius: 25px;
         border: 1px solid var(--border-glass-bright);
-        box-shadow: 
-            0 20px 50px rgba(0, 0, 0, 0.9),
-            inset 0 1px 1px rgba(255, 255, 255, 0.2); /* Reflejo superior estilo cristal */
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.2);
         padding: 30px;
         text-align: center;
-        transition: all 0.5s ease;
+        transform: rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+        transition: transform 0.2s ease-out;
+        will-change: transform;
+        animation: breathe 6s ease-in-out 1.5s infinite;
     }
 
-    /* Foto de perfil con aro Azul Rey */
-    .profile-pic {
+    /* Destello de luz que sigue al cursor */
+    .card::after {
+        content: '';
+        position: absolute;
+        inset: 0;
+        border-radius: inherit;
+        pointer-events: none;
+        opacity: 0;
+        background: radial-gradient(circle at var(--mx, 50%) var(--my, 0%), rgba(255, 255, 255, 0.12), transparent 55%);
+        transition: opacity 0.3s ease;
+    }
+    .card.tilting::after { opacity: 1; }
+
+    /* ---------- Avatar con aro giratorio azul → carmín ---------- */
+    .avatar {
+        position: relative;
         width: 120px;
         height: 120px;
+        margin: -80px auto 20px;
         border-radius: 50%;
-        border: 4px solid var(--azul-rey);
+        cursor: pointer;
+        animation: pop 0.8s cubic-bezier(.2, .8, .2, 1) 0.35s both,
+                   float 5s ease-in-out 1.3s infinite;
+    }
+    .avatar::before {
+        content: '';
+        position: absolute;
+        inset: -4px;
+        border-radius: 50%;
+        background: conic-gradient(var(--azul-rey), var(--rojo-carmin), var(--azul-rey));
         box-shadow: 0 0 25px var(--azul-rey-glow);
+        animation: spin 8s linear infinite;
+    }
+    .profile-pic {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        border: 4px solid var(--obsidiana-solido);
         object-fit: cover;
-        margin-top: -80px;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
+        display: block;
     }
 
-    h1 { 
-        font-size: 1.8rem; 
-        margin: 0; 
-        color: var(--blanco-puro); 
-        font-weight: 600; 
+    h1 {
+        font-size: 1.8rem;
+        margin: 0;
+        font-weight: 600;
         letter-spacing: 0.5px;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.5);
+        text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+        animation: track 1s cubic-bezier(.2, .8, .2, 1) 0.55s both;
     }
 
-    .title { 
-        font-weight: 600; 
-        font-size: 0.95rem; 
-        margin-bottom: 30px; 
-        color: var(--azul-rey); 
-        text-transform: uppercase; 
+    .title {
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin: 6px 0 24px;
+        text-transform: uppercase;
         letter-spacing: 2px;
     }
-
-    .socials { 
-        display: grid; 
-        grid-template-columns: repeat(3, 1fr); 
-        gap: 15px; 
-        margin-bottom: 30px; 
+    /* Destello de luz que recorre el cargo */
+    .title span {
+        background: linear-gradient(100deg, var(--azul-claro) 40%, #ffffff 50%, var(--azul-claro) 60%) 100% 0 / 250% 100%;
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        animation: shimmer 4.5s ease-in-out 1.6s infinite;
     }
 
-    /* Botones de Redes Sociales en Cristal Oscuro */
+    @keyframes shimmer { to { background-position: -100% 0; } }
+    @keyframes float {
+        0%, 100% { transform: translateY(0); }
+        50%      { transform: translateY(-7px); }
+    }
+    @keyframes track {
+        from { opacity: 0; letter-spacing: 10px; filter: blur(6px); }
+        to   { opacity: 1; letter-spacing: 0.5px; filter: blur(0); }
+    }
+    @keyframes breathe {
+        0%, 100% { box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+        50%      { box-shadow: 0 20px 60px rgba(0, 0, 0, 0.9), 0 0 38px rgba(29, 78, 216, 0.35), inset 0 1px 1px rgba(255, 255, 255, 0.2); }
+    }
+    @keyframes drift {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50%      { transform: translate(50px, -40px) scale(1.15); }
+    }
+    @keyframes wiggle {
+        0%, 100% { transform: rotate(0); }
+        25%      { transform: rotate(-14deg) scale(1.15); }
+        75%      { transform: rotate(14deg) scale(1.15); }
+    }
+
+    /* Luces suaves que flotan detrás de la tarjeta */
+    .orb {
+        position: fixed;
+        z-index: -1;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        filter: blur(70px);
+        opacity: 0.35;
+        pointer-events: none;
+        animation: drift 14s ease-in-out infinite;
+    }
+    .orb-a { top: 8%; left: 6%; background: var(--azul-rey); }
+    .orb-b { bottom: 6%; right: 6%; background: var(--rojo-carmin); animation-delay: -7s; }
+
+    /* ---------- Botones de acción ---------- */
+    .actions { display: grid; gap: 10px; margin-bottom: 24px; }
+
+    .btn {
+        position: relative;
+        overflow: hidden;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        padding: 14px 20px;
+        border-radius: 15px;
+        border: 1px solid var(--border-glass-subtle);
+        background: rgba(255, 255, 255, 0.04);
+        color: var(--blanco-puro);
+        font-family: inherit;
+        font-size: 0.95rem;
+        text-decoration: none;
+        cursor: pointer;
+        transition: background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s;
+    }
+    .btn-primary {
+        background: var(--rojo-carmin-hover-bg);
+        border-color: var(--rojo-carmin);
+        font-weight: 600;
+    }
+    /* Brillo que cruza el botón principal */
+    .btn-primary::after {
+        content: '';
+        position: absolute;
+        top: 0; bottom: 0; left: -60%;
+        width: 40%;
+        background: linear-gradient(100deg, transparent, rgba(255, 255, 255, 0.28), transparent);
+        transform: skewX(-20deg);
+        transition: left 0.7s ease;
+    }
+
+    /* ---------- Redes ---------- */
+    .socials {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+        margin-bottom: 24px;
+    }
     .socials a {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 18px;
         background: rgba(255, 255, 255, 0.03);
         backdrop-filter: blur(12px);
         -webkit-backdrop-filter: blur(12px);
         color: var(--blanco-plata);
-        padding: 18px;
         border-radius: 15px;
         text-decoration: none;
         font-size: 1.5rem;
-        transition: all 0.3s ease;
         border: 1px solid var(--border-glass-subtle);
         box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+        transition: color 0.3s, background 0.3s, border-color 0.3s, box-shadow 0.3s, transform 0.3s;
     }
 
-    /* Hover Rojo Carmín con Neón */
-    .socials a:hover {
-        color: var(--blanco-puro);
-        background: var(--rojo-carmin-hover-bg);
-        box-shadow: 0 8px 25px var(--rojo-carmin-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
-        border: 1px solid var(--rojo-carmin);
-        transform: translateY(-3px);
-    }
+    /* ---------- Contacto desplegable ---------- */
+    .details-btn { width: 100%; justify-content: space-between; padding: 15px 25px; font-size: 1rem; }
+    #arrow { transition: transform 0.3s ease; }
 
-    /* Botón Desplegable de Contacto */
-    .details-btn {
-        background: rgba(255, 255, 255, 0.04);
-        backdrop-filter: blur(12px);
-        -webkit-backdrop-filter: blur(12px);
-        color: var(--blanco-puro);
-        border: 1px solid var(--border-glass-subtle);
-        box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
-        padding: 15px 25px;
-        border-radius: 15px;
-        cursor: pointer;
-        width: 100%;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        font-family: 'Poppins', sans-serif;
-        font-size: 1rem;
-        transition: all 0.3s ease;
-    }
-    
-    .details-btn:hover {
-        background: var(--rojo-carmin-hover-bg);
-        border-color: var(--rojo-carmin);
-        box-shadow: 0 5px 20px var(--rojo-carmin-glow);
-    }
-
-    /* Contenedor Desplegable en Obsidiana Oscura */
     .contact-info {
-        max-height: 0;
+        display: grid;
+        grid-template-rows: 0fr;
+        margin-top: 0;
+        transition: grid-template-rows 0.45s ease, margin-top 0.45s ease;
+    }
+    .contact-info.visible { grid-template-rows: 1fr; margin-top: 12px; }
+
+    .contact-inner {
+        min-height: 0;
         overflow: hidden;
-        transition: max-height 0.5s ease-out, padding 0.5s ease;
         background: var(--obsidiana-panel);
         backdrop-filter: blur(15px);
         -webkit-backdrop-filter: blur(15px);
-        border: 1px solid var(--border-glass-subtle);
+        border: 1px solid transparent;
         border-radius: 15px;
-        margin-top: 10px;
+        text-align: left;
+        transition: border-color 0.45s ease;
     }
+    .contact-info.visible .contact-inner { border-color: var(--border-glass-subtle); }
 
-    .contact-info.visible { 
-        max-height: 200px; 
-        padding: 15px; 
-        margin-top: 15px; 
-    }
-    
-    .contact-item { 
-        margin: 12px 0; 
-        display: flex; 
-        align-items: center; 
-    }
+    .contact-list { padding: 6px 16px; }
 
-    .contact-item i { 
-        color: var(--azul-rey); 
-        margin-right: 12px; 
-    }
-    
-    .contact-item a {
+    .contact-item {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 0;
         color: var(--blanco-plata);
         text-decoration: none;
-        transition: color 0.3s ease;
+        opacity: 0;
+        transform: translateX(-10px);
+        transition: opacity 0.4s ease, transform 0.4s ease, color 0.3s;
     }
-    
-    .contact-item a:hover {
-        color: var(--blanco-puro);
+    .contact-info.visible .contact-item { opacity: 1; transform: none; }
+    .contact-info.visible .contact-item:nth-child(1) { transition-delay: 0.10s; }
+    .contact-info.visible .contact-item:nth-child(2) { transition-delay: 0.18s; }
+    .contact-info.visible .contact-item:nth-child(3) { transition-delay: 0.26s; }
+    .contact-item i { color: var(--azul-claro); width: 18px; text-align: center; }
+    .contact-item:hover { color: var(--blanco-puro); }
+
+    /* ---------- Aviso al guardar contacto ---------- */
+    .toast {
+        position: fixed;
+        left: 50%;
+        bottom: 28px;
+        transform: translate(-50%, 20px);
+        padding: 12px 20px;
+        border-radius: 12px;
+        background: var(--obsidiana-solido);
+        border: 1px solid var(--border-glass-bright);
+        font-size: 0.9rem;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s, transform 0.3s;
     }
-    
-    #arrow {
-        transition: transform 0.3s ease;
+    .toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+    /* ---------- Hover solo en dispositivos con puntero ---------- */
+    @media (hover: hover) {
+        .socials a:hover {
+            color: var(--blanco-puro);
+            background: var(--rojo-carmin-hover-bg);
+            border-color: var(--rojo-carmin);
+            box-shadow: 0 8px 25px var(--rojo-carmin-glow), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transform: translateY(-3px);
+        }
+        .btn:hover {
+            background: var(--rojo-carmin-hover-bg);
+            border-color: var(--rojo-carmin);
+            box-shadow: 0 5px 20px var(--rojo-carmin-glow);
+            transform: translateY(-2px);
+        }
+        .btn-primary:hover::after { left: 120%; }
+        .socials a:hover i { animation: wiggle 0.5s ease; }
     }
 
+    /* Efecto al presionar */
+    .btn:active, .socials a:active { transform: scale(0.95); }
+
+    /* ---------- Teclado visible ---------- */
+    a:focus-visible, button:focus-visible {
+        outline: 2px solid var(--azul-claro);
+        outline-offset: 3px;
+    }
+
+    /* ---------- Respeta "reducir movimiento" ---------- */
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after {
+            animation: none !important;
+            transition-duration: 0.01ms !important;
+            transition-delay: 0s !important;
+        }
+        .card { transform: none; }
+    }
 </style>
 </head>
 <body>
-    <div class="card-container">
-        <div class="card">
-            <img src="Ima/tu.webp" alt="Damian Cruz - CODETRAX" class="profile-pic">
-            <h1>DAMIAN CRUZ</h1>
-            <p class="title">FUNDADOR | CODETRAX</p>
-            
-            <div class="socials">
-                <a href="https://www.instagram.com/damia_ncv" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-                <a href="https://www.tiktok.com/@damian_cdx" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a href="https://codetrax.s.gy/" target="_blank" rel="noopener noreferrer" aria-label="Sitio Web CODETRAX"><i class="fas fa-globe"></i></a>
-                <a href="https://discord.gg/uUSeyPxzgX" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
-                <a href="https://github.com/Codetrax-web" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
-                <a href="https://www.youtube.com/@DAMIANCDX" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+    <div class="orb orb-a" aria-hidden="true"></div>
+    <div class="orb orb-b" aria-hidden="true"></div>
+    <main class="card-container">
+        <div class="card" id="card">
+            <div class="avatar" id="avatar">
+                <img src="Ima/tu.webp" alt="Foto de Damian Cruz" class="profile-pic" width="120" height="120">
             </div>
-            
-            <button class="details-btn" id="toggle-details">
-                Datos de Contacto <i class="fas fa-chevron-down" id="arrow"></i>
+            <h1>DAMIAN CRUZ</h1>
+            <p class="title stagger" style="--d:.75s"><span>FUNDADOR | CODETRAX</span></p>
+
+            <div class="actions">
+                <button class="btn btn-primary stagger" style="--d:.85s" id="save-btn" type="button">
+                    <i class="fas fa-address-book"></i> Guardar contacto
+                </button>
+            </div>
+
+            <div class="socials">
+                <a class="stagger" style="--d:1.00s" href="https://www.instagram.com/damia_ncv" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a class="stagger" style="--d:1.06s" href="https://www.tiktok.com/@damian_cdx" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
+                <a class="stagger" style="--d:1.12s" href="https://codetrax.s.gy/" target="_blank" rel="noopener noreferrer" aria-label="Sitio web de CodeTrax"><i class="fas fa-globe"></i></a>
+                <a class="stagger" style="--d:1.18s" href="https://discord.gg/uUSeyPxzgX" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
+                <a class="stagger" style="--d:1.24s" href="https://github.com/Codetrax-web" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
+                <a class="stagger" style="--d:1.30s" href="https://www.youtube.com/@DAMIANCDX" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+            </div>
+
+            <button class="btn details-btn stagger" style="--d:1.4s" id="toggle-details" type="button" aria-expanded="false" aria-controls="contact-panel">
+                Datos de contacto <i class="fas fa-chevron-down" id="arrow" aria-hidden="true"></i>
             </button>
-            
+
             <div class="contact-info" id="contact-panel">
-                <div class="contact-item">
-                    <i class="fas fa-phone"></i> 
-                    <a href="tel:+525578526705">+52 5578526705</a>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-envelope"></i> 
-                    <a href="mailto:damiancdx@gmail.com">damiancdx@gmail.com</a>
+                <div class="contact-inner" id="contact-inner" inert>
+                    <div class="contact-list">
+                        <a class="contact-item" id="wa-link" href="#" target="_blank" rel="noopener noreferrer"><i class="fab fa-whatsapp"></i> WhatsApp</a>
+                        <a class="contact-item" id="tel-link" href="#"><i class="fas fa-phone"></i> <span id="tel-text"></span></a>
+                        <a class="contact-item" id="mail-link" href="#"><i class="fas fa-envelope"></i> <span id="mail-text"></span></a>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
     <script>
+        // ===== Edita tus datos aquí (un solo lugar) =====
+        const CONTACTO = {
+            nombre: 'Damian Cruz',
+            empresa: 'CodeTrax',
+            cargo: 'Fundador',
+            telefono: '+525578526705',   // cambia por tu número de negocio cuando lo tengas
+            whatsapp: '525578526705',    // solo dígitos, con código de país
+            correo: 'damiancdx@gmail.com',
+            web: 'https://codetrax.s.gy/',
+            mensaje: 'Hola Damian, vi tu tarjeta de CodeTrax y quiero más información.'
+        };
+
+        // Rellena los enlaces de contacto
+        const waUrl = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(CONTACTO.mensaje)}`;
+        document.getElementById('wa-link').href = waUrl;
+        document.getElementById('tel-link').href = `tel:${CONTACTO.telefono}`;
+        document.getElementById('tel-text').textContent = CONTACTO.telefono.replace(/^\+52(\d{2})(\d{4})(\d{4})$/, '+52 $1 $2 $3');
+        document.getElementById('mail-link').href = `mailto:${CONTACTO.correo}`;
+        document.getElementById('mail-text').textContent = CONTACTO.correo;
+
+        // Despliegue de contacto
         const toggleBtn = document.getElementById('toggle-details');
-        const contactPanel = document.getElementById('contact-panel');
-        const arrowIcon = document.getElementById('arrow');
-        
+        const panel = document.getElementById('contact-panel');
+        const inner = document.getElementById('contact-inner');
+        const arrow = document.getElementById('arrow');
+
         toggleBtn.addEventListener('click', () => {
-            contactPanel.classList.toggle('visible');
-            arrowIcon.style.transform = contactPanel.classList.contains('visible') ? 'rotate(180deg)' : 'rotate(0deg)';
+            const abierto = panel.classList.toggle('visible');
+            toggleBtn.setAttribute('aria-expanded', abierto);
+            inner.inert = !abierto;
+            arrow.style.transform = abierto ? 'rotate(180deg)' : 'rotate(0deg)';
         });
+
+        // Guardar contacto (.vcf)
+        const toast = document.getElementById('toast');
+        let toastTimer;
+        function avisar(texto) {
+            toast.textContent = texto;
+            toast.classList.add('show');
+            clearTimeout(toastTimer);
+            toastTimer = setTimeout(() => toast.classList.remove('show'), 2400);
+        }
+
+        document.getElementById('save-btn').addEventListener('click', () => {
+            const vcf = [
+                'BEGIN:VCARD', 'VERSION:3.0',
+                'N:Cruz;Damian;;;', `FN:${CONTACTO.nombre}`,
+                `ORG:${CONTACTO.empresa}`, `TITLE:${CONTACTO.cargo}`,
+                `TEL;TYPE=CELL:${CONTACTO.telefono}`,
+                `EMAIL:${CONTACTO.correo}`, `URL:${CONTACTO.web}`,
+                'END:VCARD'
+            ].join('\r\n');
+            const url = URL.createObjectURL(new Blob([vcf], { type: 'text/vcard' }));
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'damian-cruz.vcf';
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+            URL.revokeObjectURL(url);
+            avisar('Contacto descargado');
+        });
+
+        // Al tocar la foto, da una vuelta con rebote
+        document.getElementById('avatar').addEventListener('click', (e) => {
+            if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+            e.currentTarget.animate(
+                [
+                    { transform: 'rotate(0deg) scale(1)' },
+                    { transform: 'rotate(360deg) scale(1.18)', offset: 0.6 },
+                    { transform: 'rotate(360deg) scale(1)' }
+                ],
+                { duration: 800, easing: 'cubic-bezier(.3, 1.3, .5, 1)' }
+            );
+        });
+
+        // Inclinación 3D y destello (solo con mouse y sin "reducir movimiento")
+        const card = document.getElementById('card');
+        const conMouse = matchMedia('(hover: hover) and (pointer: fine)').matches;
+        const sinMovimiento = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (conMouse && !sinMovimiento) {
+            card.addEventListener('pointermove', (e) => {
+                const r = card.getBoundingClientRect();
+                const x = (e.clientX - r.left) / r.width;
+                const y = (e.clientY - r.top) / r.height;
+                card.style.setProperty('--ry', ((x - 0.5) * 8).toFixed(2) + 'deg');
+                card.style.setProperty('--rx', ((0.5 - y) * 8).toFixed(2) + 'deg');
+                card.style.setProperty('--mx', (x * 100).toFixed(1) + '%');
+                card.style.setProperty('--my', (y * 100).toFixed(1) + '%');
+                card.classList.add('tilting');
+            });
+            card.addEventListener('pointerleave', () => {
+                card.style.setProperty('--rx', '0deg');
+                card.style.setProperty('--ry', '0deg');
+                card.classList.remove('tilting');
+            });
+        }
     </script>
 </body>
 </html>
