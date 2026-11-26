@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Damian Cruz - CodeTrax</title>
-    <meta name="description" content="Damian Cruz, fundador de CodeTrax. Mis redes, sitio web y formas de contacto en un solo lugar.">
+    <title>Damian Cruz - Codetrax</title>
+    <meta name="description" content="Damian Cruz, fundador de Codetrax. Mis redes, sitio web y formas de contacto en un solo lugar.">
     <meta name="theme-color" content="#08080c">
 
     <!-- Vista previa al compartir -->
     <meta property="og:type" content="website">
-    <meta property="og:title" content="Damian Cruz - Fundador de CodeTrax">
+    <meta property="og:title" content="Damian Cruz - Fundador de Codetrax">
     <meta property="og:description" content="Mis redes, sitio web y contacto en un solo lugar.">
     <meta property="og:url" content="https://damian.s.gy">
     <meta property="og:image" content="https://codetrax-web.github.io/Presentacion/Ima/tu.webp">
@@ -380,7 +380,7 @@
     <div class="orb orb-b" aria-hidden="true"></div>
     <main class="card-container">
         <div class="card" id="card">
-            <div class="avatar" id="avatar">
+            <div class="avatar" id="avatar" role="button" tabindex="0" aria-label="Foto de Damian Cruz">
                 <img src="Ima/tu.webp" alt="Foto de Damian Cruz" class="profile-pic" width="120" height="120">
             </div>
             <h1>DAMIAN CRUZ</h1>
@@ -395,7 +395,7 @@
             <div class="socials">
                 <a class="stagger" style="--d:1.00s" href="https://www.instagram.com/damia_ncv" target="_blank" rel="noopener noreferrer" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
                 <a class="stagger" style="--d:1.06s" href="https://www.tiktok.com/@damian_cdx" target="_blank" rel="noopener noreferrer" aria-label="TikTok"><i class="fab fa-tiktok"></i></a>
-                <a class="stagger" style="--d:1.12s" href="https://codetrax.s.gy/" target="_blank" rel="noopener noreferrer" aria-label="Sitio web de CodeTrax"><i class="fas fa-globe"></i></a>
+                <a class="stagger" style="--d:1.12s" href="https://codetrax.s.gy/" target="_blank" rel="noopener noreferrer" aria-label="Sitio web de Codetrax"><i class="fas fa-globe"></i></a>
                 <a class="stagger" style="--d:1.18s" href="https://discord.gg/uUSeyPxzgX" target="_blank" rel="noopener noreferrer" aria-label="Discord"><i class="fab fa-discord"></i></a>
                 <a class="stagger" style="--d:1.24s" href="https://github.com/Codetrax-web" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fab fa-github"></i></a>
                 <a class="stagger" style="--d:1.30s" href="https://www.youtube.com/@DAMIANCDX" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
@@ -423,20 +423,31 @@
         // ===== Edita tus datos aquí (un solo lugar) =====
         const CONTACTO = {
             nombre: 'Damian Cruz',
-            empresa: 'CodeTrax',
+            empresa: 'Codetrax',
             cargo: 'Fundador',
             telefono: '+525578526705',   // cambia por tu número de negocio cuando lo tengas
             whatsapp: '525578526705',    // solo dígitos, con código de país
             correo: 'damiancdx@gmail.com',
             web: 'https://codetrax.s.gy/',
-            mensaje: 'Hola Damian, vi tu tarjeta de CodeTrax y quiero más información.'
+            mensaje: 'Hola Damian, vi tu tarjeta de Codetrax y quiero más información.'
         };
 
         // Rellena los enlaces de contacto
         const waUrl = `https://wa.me/${CONTACTO.whatsapp}?text=${encodeURIComponent(CONTACTO.mensaje)}`;
         document.getElementById('wa-link').href = waUrl;
         document.getElementById('tel-link').href = `tel:${CONTACTO.telefono}`;
-        document.getElementById('tel-text').textContent = CONTACTO.telefono.replace(/^\+52(\d{2})(\d{4})(\d{4})$/, '+52 $1 $2 $3');
+        // Formatea el teléfono: código de país (+52) y el resto agrupado de 4 en 4 desde el final
+        // Si el número no tiene ese formato, se muestra tal cual
+        function formatearTelefono(telefono) {
+            const m = telefono.match(/^\+(\d{2})(\d+)$/);
+            if (!m) return telefono;
+            const grupos = [];
+            let resto = m[2];
+            while (resto.length > 4) { grupos.unshift(resto.slice(-4)); resto = resto.slice(0, -4); }
+            grupos.unshift(resto);
+            return '+' + m[1] + ' ' + grupos.join(' ');
+        }
+        document.getElementById('tel-text').textContent = formatearTelefono(CONTACTO.telefono);
         document.getElementById('mail-link').href = `mailto:${CONTACTO.correo}`;
         document.getElementById('mail-text').textContent = CONTACTO.correo;
 
@@ -483,10 +494,11 @@
             avisar('Contacto descargado');
         });
 
-        // Al tocar la foto, da una vuelta con rebote
-        document.getElementById('avatar').addEventListener('click', (e) => {
+        // Al tocar la foto (o activarla con Enter o Espacio), da una vuelta con rebote
+        const avatar = document.getElementById('avatar');
+        function girarAvatar() {
             if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-            e.currentTarget.animate(
+            avatar.animate(
                 [
                     { transform: 'rotate(0deg) scale(1)' },
                     { transform: 'rotate(360deg) scale(1.18)', offset: 0.6 },
@@ -494,6 +506,13 @@
                 ],
                 { duration: 800, easing: 'cubic-bezier(.3, 1.3, .5, 1)' }
             );
+        }
+        avatar.addEventListener('click', girarAvatar);
+        avatar.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                if (e.key === ' ') e.preventDefault();
+                girarAvatar();
+            }
         });
 
         // Inclinación 3D y destello (solo con mouse y sin "reducir movimiento")
